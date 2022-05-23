@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>test page</title>
+  </head>
+  <body>
+    <h1>結果</h1>
+    <table>
+      {% for k,v in selected.items(): %}
+      <tr>
+        <p><td>{{k}}</td><td>{{v}}</td><td>円</td></p>
+      </tr>
+      {% endfor %}
+    </table>
+    <p>合計金額  {{Sum}}円</p>
+    <a href="/">ホームに戻る</a>
+  </body>
+</html>
