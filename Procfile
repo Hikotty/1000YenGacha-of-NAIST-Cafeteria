@@ -1,0 +1,1 @@
+web: gunicorn 1000yen_gatya_UI.py:app --log-file=-

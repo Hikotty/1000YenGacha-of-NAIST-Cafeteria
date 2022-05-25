@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>NAIST学食円ガチャ</title>
-  </head>
-  <body>
-    <h1>NAIST学食1000円ガチャ</h1>
-    <a href="/result">ガチャを引く</a>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>NAIST学食円ガチャ</title>
+  <link rel="stylesheet" href="style.css">
+  <style type="text/css">
+    .button {
+      display: inline-block;
+      border-radius: 14%;
+      /* 角丸       */
+      font-size: 21pt;
+      /* 文字サイズ */
+      text-align: center;
+      /* 文字位置   */
+      cursor: pointer;
+      /* カーソル   */
+      padding: 12px 12px;
+      /* 余白       */
+      background: #66ff66;
+      /* 背景色     */
+      color: rgba(26, 26, 255, 0.86);
+      /* 文字色     */
+      line-height: 1em;
+      /* 1行の高さ  */
+      transition: .3s;
+      /* なめらか変化 */
+      box-shadow: 3px 3px 6px #666666;
+      /* 影の設定 */
+      border: 2px solid #66ff66;
+      /* 枠の指定 */
+    }
+
+    .button:hover {
+      box-shadow: none;
+      /* カーソル時の影消去 */
+      color: #66ff66;
+      /* 背景色     */
+      background: rgba(26, 26, 255, 0.86);
+      /* 文字色     */
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="center">NAIST学食1000円ガチャ</h1>
+  <div class="center">
+    <a href="/result" class="button" style="text-decoration:none;">ガチャを引く</a>
+    <p></p>
+    <a href="/notes" class="center">このサイトについて</a>
+  </div>
+</body>
+
 </html>
