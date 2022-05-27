@@ -1,12 +1,18 @@
 from flask import Flask, render_template
 import gatya
 import json
+from pathlib import Path
 app = Flask(__name__)
 
 with open('data.json','r') as file:
     data = json.load(file)
 
+with open('photo_data.json','r') as file:
+    photo_names = json.load(file)
+
 budget = 1000
+#DIR = Path(__file__).resolve().parent
+DIR = "./static/images/"
 
 @app.route('/')
 def main():
@@ -22,7 +28,9 @@ def result():
     selected_salt,selected_salt_sum = gatya_obj.salt(data,selected_menu)
     selected_carbon,selected_carbon_sum = gatya_obj.carbon(data,selected_menu)
     n = len(selected_menu)
-    #selected_photos = 
+    selected_photos = []
+    for i in selected_menu:
+        selected_photos.append(DIR+photo_names[i])
     return render_template("result.html",selected_manu=selected_menu,
         selected_price=selected_price,Sum=Sum,n=n,
         selected_calorie=selected_calorie,
@@ -30,7 +38,8 @@ def result():
         selected_salt=selected_salt,
         selected_salt_sum=round(selected_salt_sum,2),
         selected_carbon=selected_carbon,
-        selected_carbon_sum=round(selected_carbon_sum,2))
+        selected_carbon_sum=round(selected_carbon_sum,2),
+        selected_photos=selected_photos)
 
 @app.route('/notes')
 def notes():

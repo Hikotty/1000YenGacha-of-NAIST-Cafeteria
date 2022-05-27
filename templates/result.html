@@ -44,12 +44,16 @@
     <h1>結果</h1>
     <table id="table">
       <tr>
+        <td></td>
         <td>品目</td>
         <td>値段</td>
       </tr>
       {% for i in range(n): %}
       <tr>
         <p>
+          <td>
+            <img src={{selected_photos[i]}} alt=”image” width="50" height="50">
+          </td>
           <td>{{selected_manu[i]}}</td>
           <td>{{selected_price[i]}}円</td>
         </p>

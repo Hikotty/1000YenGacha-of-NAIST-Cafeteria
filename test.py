@@ -1,4 +1,6 @@
 import json
-with open('data.json','r') as file:
-    data = json.load(file)
+
+data = {'日替わり定食': 'teshoku.jpg', 'アラカルト丼': 'no_image.jpeg', 'アラカルト丼（大盛り）': 'no_image.jpeg', '親子丼': 'oyakodon.jpg', '親子丼（大盛り）': 'oyakodon.jpg', '玉子丼': 'no_image.jpeg', '玉子丼（大盛り）': 'no_image.jpeg', '月見うどん': 'no_image.jpeg', '月見うどん（大盛り）': 'no_image.jpeg', 'カツ丼': 'katudon.jpg', 'カツ丼（大盛り）': 'katudon.jpg', 'カレーライス': 'no_image.jpeg', 'カレーライス（大盛り）': 'no_image.jpeg', 'カツカレー': 'katu_curry.jpg', 'カツカレー（大盛り）': 'katu_curry.jpg', 'チャーハン': 'no_image.jpeg', 'チャーハン（大盛り）': 'no_image.jpeg', 'かけうどん': 'no_image.jpeg', 'かけうどん（大盛り）': 'no_image.jpeg', 'かけそば': 'no_image.jpeg', 'かけそば（大盛り）': 'no_image.jpeg', 'きつねうどん': 'no_image.jpeg', 'きつねうどん（大盛り）': 'no_image.jpeg', 'きつねそば': 'no_image.jpeg', 'きつねそば（大盛り）': 'no_image.jpeg', 'カレーうどん': 'curry_udon.jpg', 'カレーうどん（大盛り）': 'curry_udon.jpg', 'ラーメン': 'no_image.jpeg', 'ラーメン（大盛り）': 'no_image.jpeg', '納豆': 'no_image.jpeg', '卵': 'no_image.jpeg', '味噌汁': 'no_image.jpeg', 'ライス（中）': 'no_image.jpeg', 'ライス（小）': 'no_image.jpeg', '漬物': 'no_image.jpeg'}
+with open('photo_data.json','w') as file:
+    json.dump(data,file)
 print(data)
