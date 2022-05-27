@@ -22,6 +22,7 @@ def result():
     selected_salt,selected_salt_sum = gatya_obj.salt(data,selected_menu)
     selected_carbon,selected_carbon_sum = gatya_obj.carbon(data,selected_menu)
     n = len(selected_menu)
+    #selected_photos = 
     return render_template("result.html",selected_manu=selected_menu,
         selected_price=selected_price,Sum=Sum,n=n,
         selected_calorie=selected_calorie,
