@@ -1,7 +1,10 @@
 from flask import Flask, render_template
 import gatya
+import optimization
 import json
 from pathlib import Path
+
+from test import optimazation
 app = Flask(__name__)
 
 with open('data.json','r') as file:
@@ -10,8 +13,10 @@ with open('data.json','r') as file:
 with open('photo_data.json','r') as file:
     photo_names = json.load(file)
 
+with open('maxcal_data.json','r') as file:
+    maxcal_menu = json.load(file)
+
 budget = 1000
-#DIR = Path(__file__).resolve().parent
 DIR = "./static/images/"
 
 @app.route('/')
@@ -31,7 +36,34 @@ def result():
     selected_photos = []
     for i in selected_menu:
         selected_photos.append(DIR+photo_names[i])
-    return render_template("result.html",selected_manu=selected_menu,
+    return render_template("result.html",
+        selected_menu=selected_menu,
+        selected_price=selected_price,Sum=Sum,n=n,
+        selected_calorie=selected_calorie,
+        selected_calorie_sum=round(selected_calorie_sum,2),
+        selected_salt=selected_salt,
+        selected_salt_sum=round(selected_salt_sum,2),
+        selected_carbon=selected_carbon,
+        selected_carbon_sum=round(selected_carbon_sum,2),
+        selected_photos=selected_photos)
+
+@app.route('/maxcal')
+def maxcal():
+    opt_obj = optimization.Optimize()
+    res = opt_obj.return_result(maxcal_menu)
+    selected_menu,selected_price,selected_calorie,selected_salt,selected_carbon = res[0],res[1],res[2],res[3],res[4]
+    Sum = sum(selected_price)
+    selected_calorie_sum = sum(selected_calorie)
+    selected_salt_sum = sum(selected_salt)
+    selected_carbon_sum = sum(selected_carbon)
+    n = len(selected_price)
+
+    selected_photos = []
+    for i in selected_menu:
+        selected_photos.append(DIR+photo_names[i])
+
+    return render_template("result.html",
+        selected_menu=selected_menu,
         selected_price=selected_price,Sum=Sum,n=n,
         selected_calorie=selected_calorie,
         selected_calorie_sum=round(selected_calorie_sum,2),

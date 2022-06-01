@@ -1,6 +1,112 @@
 import json
 
-data = {'日替わり定食': 'teshoku.jpg', 'アラカルト丼': 'no_image.jpeg', 'アラカルト丼（大盛り）': 'no_image.jpeg', '親子丼': 'oyakodon.jpg', '親子丼（大盛り）': 'oyakodon.jpg', '玉子丼': 'no_image.jpeg', '玉子丼（大盛り）': 'no_image.jpeg', '月見うどん': 'no_image.jpeg', '月見うどん（大盛り）': 'no_image.jpeg', 'カツ丼': 'katudon.jpg', 'カツ丼（大盛り）': 'katudon.jpg', 'カレーライス': 'no_image.jpeg', 'カレーライス（大盛り）': 'no_image.jpeg', 'カツカレー': 'katu_curry.jpg', 'カツカレー（大盛り）': 'katu_curry.jpg', 'チャーハン': 'no_image.jpeg', 'チャーハン（大盛り）': 'no_image.jpeg', 'かけうどん': 'no_image.jpeg', 'かけうどん（大盛り）': 'no_image.jpeg', 'かけそば': 'no_image.jpeg', 'かけそば（大盛り）': 'no_image.jpeg', 'きつねうどん': 'no_image.jpeg', 'きつねうどん（大盛り）': 'no_image.jpeg', 'きつねそば': 'no_image.jpeg', 'きつねそば（大盛り）': 'no_image.jpeg', 'カレーうどん': 'curry_udon.jpg', 'カレーうどん（大盛り）': 'curry_udon.jpg', 'ラーメン': 'no_image.jpeg', 'ラーメン（大盛り）': 'no_image.jpeg', '納豆': 'no_image.jpeg', '卵': 'no_image.jpeg', '味噌汁': 'no_image.jpeg', 'ライス（中）': 'no_image.jpeg', 'ライス（小）': 'no_image.jpeg', '漬物': 'no_image.jpeg'}
-with open('photo_data.json','w') as file:
-    json.dump(data,file)
-print(data)
+class optimazation():
+    def maximize_calorie(self,data,budget):
+        menu_cal = [] #maximize variable
+        menu_pri = []
+        keys = []
+        for k,v in data.items():
+            menu_cal.append(v["カロリー"])
+            menu_pri.append(v["値段"])
+            keys.append(k)
+            #print(v['値段'],v['カロリー'])
+        N = len(menu_cal)
+
+        #x = zip(menu_pri,menu_cal,keys)
+        #x = sorted(x,reverse=True)
+        #menu_pri,menu_cal,keys = zip(*x)
+
+        pic = [[0 for i in range(budget+1)] for i in range(N+1)]
+        dp = [[0 for i in range(budget+1)] for i in range(N+1)]
+        
+        for i in range(N):
+            for p in range(budget+1):
+                if p < menu_pri[i]:
+                    dp[i+1][p] = dp[i][p] 
+                else:
+                    if dp[i][p] <= dp[i][p-menu_pri[i]]+menu_cal[i]:
+                        dp[i+1][p] = dp[i][p-menu_pri[i]]+menu_cal[i]
+                        pic[i+1][p] = p - menu_pri[i]
+                    else:
+                        dp[i+1][p] = dp[i][p]
+                        pic[i+1][p] = p
+
+        print(dp[-1][-1])
+        pic_w = budget
+        for i in range(N-1,0,-1):
+            if pic[i+1][pic_w] == pic_w - menu_pri[i]:
+                print(keys[i] ," th item (price = ",menu_pri[i],", value = ",menu_cal[i])
+            pic_w = pic[i+1][pic_w]
+
+with open('data.json','r') as file:
+    data = json.load(file)
+"""
+x = optimazation()
+print(x.maximize_calorie(data,1000))
+
+a = {"ライス（小）","玉子丼（大盛り）","カツカレー（大盛り）"}
+
+a = {'日替わり定食': 'teshoku.jpg', 'アラカルト丼': 'alacartedon.jpg',
+ 'アラカルト丼（大盛り）': 'alacartedon.jpg', '親子丼': 'oyakodon.jpg',
+  '親子丼（大盛り）': 'oyakodon.jpg', '玉子丼': 'tamagodon.jpg',
+   '玉子丼（大盛り）': 'tamagodon.jpg', '月見うどん': 'tukimi_udon.jpg',
+    '月見うどん（大盛り）': 'tukimi_udon.jpg', 'カツ丼': 'katudon.jpg', 
+    'カツ丼（大盛り）': 'katudon.jpg', 'カレーライス': 'no_image.jpeg',
+     'カレーライス（大盛り）': 'no_image.jpeg', 'カツカレー': 'katu_curry.jpg',
+      'カツカレー（大盛り）': 'katu_curry.jpg', 'チャーハン': 'no_image.jpeg',
+       'チャーハン（大盛り）': 'no_image.jpeg', 'かけうどん': 'no_image.jpeg',
+        'かけうどん（大盛り）': 'no_image.jpeg', 'かけそば': 'no_image.jpeg',
+         'かけそば（大盛り）': 'no_image.jpeg', 'きつねうどん': 'kitune_udon.jpg',
+          'きつねうどん（大盛り）': 'kitune_udon.jpg', 'きつねそば': 'no_image.jpeg',
+           'きつねそば（大盛り）': 'no_image.jpeg', 'カレーうどん': 'curry_udon.jpg', 
+           'カレーうどん（大盛り）': 'curry_udon.jpg', 'ラーメン': 'no_image.jpeg', 
+           'ラーメン（大盛り）': 'no_image.jpeg', '納豆': 'natto.jpg',
+            '卵': 'no_image.jpeg', '味噌汁': 'misoshiru.jpg', 'ライス（中）': 'no_image.jpeg',
+             'ライス（小）': 'rice_small.jpg', 'サラダ': 'salad.jpg'}
+'''
+
+a = {'日替わり定食': {'値段': 510, 'カロリー': 622, '塩分': 4.1, '炭水化物': 87.5},
+     'アラカルト丼': {'値段': 380, 'カロリー': 627, '塩分': 2.2, '炭水化物': 104.5},
+      'アラカルト丼（大盛り）': {'値段': 440, 'カロリー': 814, '塩分': 2.2, '炭水化物': 149},
+       '親子丼': {'値段': 370, 'カロリー': 630, '塩分': 2.7, '炭水化物': 103.7},
+        '親子丼（大盛り）': {'値段': 430, 'カロリー': 945, '塩分': 4.1, '炭水化物': 155.6},
+         '玉子丼': {'値段': 310, 'カロリー': 610, '塩分': 1.4, '炭水化物': 100.5},
+          '玉子丼（大盛り）': {'値段': 370, 'カロリー': 915, '塩分': 2.1, '炭水化物': 150.8},
+           '月見うどん': {'値段': 250, 'カロリー': 398, '塩分': 4.8, '炭水化物': 71.4},
+            '月見うどん（大盛り）': {'値段': 310, 'カロリー': 597, '塩分': 7.1, '炭水化物': 107.1},
+             'カツ丼': {'値段': 420, 'カロリー': 846, '塩分': 2.5, '炭水化物': 110},
+              'カツ丼（大盛り）': {'値段': 480, 'カロリー': 1269, '塩分': 3.7, '炭水化物': 165},
+               'カレーライス': {'値段': 370, 'カロリー': 672, '塩分': 2.2, '炭水化物': 88.1},
+                'カレーライス（大盛り）': {'値段': 430, 'カロリー': 1008, '塩分': 3.3, '炭水化物': 132.2},
+                 'カツカレー': {'値段': 470, 'カロリー': 1016, '塩分': 2.9, '炭水化物': 96.2},
+                  'カツカレー（大盛り）': {'値段': 530, 'カロリー': 1524, '塩分': 4.4, '炭水化物': 144.3},
+                   'チャーハン': {'値段': 320, 'カロリー': 520, '塩分': 2.6, '炭水化物': 78.3},
+                    'チャーハン（大盛り）': {'値段': 420, 'カロリー': 780, '塩分': 3.9, '炭水化物': 117.5},
+                     'かけうどん': {'値段': 200, 'カロリー': 318, '塩分': 4.2, '炭水化物': 68.8},
+                      'かけうどん（大盛り）': {'値段': 300, 'カロリー': 477, '塩分': 6.3, '炭水化物': 103.2},
+                       'かけそば': {'値段': 200, 'カロリー': 314, '塩分': 3.5, '炭水化物': 66.8},
+                        'かけそば（大盛り）': {'値段': 300, 'カロリー': 512, '塩分': 5.2, '炭水化物': 100.2},
+                         'きつねうどん': {'値段': 250, 'カロリー': 468, '塩分': 5.9, '炭水化物': 75},
+                          'きつねうどん（大盛り）': {'値段': 350, 'カロリー': 720, '塩分': 8.8, '炭水化物': 112.5},
+                           'きつねそば': {'値段': 250, 'カロリー': 481, '塩分': 6.6, '炭水化物': 71.6}, 
+                           'きつねそば（大盛り）': {'値段': 350, 'カロリー': 774, '塩分': 7.7, '炭水化物': 111.8},
+                            'カレーうどん': {'値段': 370, 'カロリー': 396, '塩分': 5.1, '炭水化物': 67},
+                             'カレーうどん（大盛り）': {'値段': 470, 'カロリー': 594, '塩分': 7.7, '炭水化物': 110.5},
+                              'ラーメン': {'値段': 310, 'カロリー': 459, '塩分': 7.8, '炭水化物': 79.7},
+                               'ラーメン（大盛り）': {'値段': 410, 'カロリー': 689, '塩分': 11.6, '炭水化物': 119.6},
+                                '納豆': {'値段': 100, 'カロリー': 88, '塩分': 0.4, '炭水化物': 5.6},
+                                 '卵': {'値段': 50, 'カロリー': 73, '塩分': 0.2, '炭水化物': 0.2},
+                                  '味噌汁': {'値段': 50, 'カロリー': 44, '塩分': 1.9, '炭水化物': 4.1}, 
+                                  'ライス（中）': {'値段': 150, 'カロリー': 281, '塩分': 0, '炭水化物': 66.8}, 
+                                  'ライス（小）': {'値段': 100, 'カロリー': 187, '塩分': 0, '炭水化物': 44.5}, 
+                                  'サラダ': {'値段': 100, 'カロリー': 67, '塩分': 1, '炭水化物': 5.7}}
+"""
+a = {'ライス（小）': {'値段': 100, 'カロリー': 187, '塩分': 0, '炭水化物': 44.5},
+     '玉子丼（大盛り）': {'値段': 370, 'カロリー': 915, '塩分': 2.1, '炭水化物': 150.8},
+     'カツカレー（大盛り）': {'値段': 530, 'カロリー': 1524, '塩分': 4.4, '炭水化物': 144.3},
+}
+#with open('photo_data.json','r') as file:
+#   a = json.load(file)
+with open('maxcal_data.json','w') as file:
+   json.dump(a,file)
+#print(a)

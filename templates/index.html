@@ -44,17 +44,28 @@
     .center {
       text-align: center;
     }
+
+    .container {
+      width: 150px;
+      background-image: url(./static/images/vending_machine.jpg);
+      background-position: center top;
+      background-repeat: no-repeat;
+      -moz-background-size: cover;
+      background-size: cover;
+    }
   </style>
 </head>
 
 <body>
   <h1 class="center">NAIST学食1000円ガチャ</h1>
+  <div class="container">
+  </div>
   <div class="center">
     <a href="/result" class="button" style="text-decoration:none;">ガチャを引く</a>
     <p></p>
     <a href="/notes" class="center">このサイトについて</a>
+    <p>1000円でカロリー最大化メニューは<a href="/maxcal">こちら</a>
   </div>
-  <img src="/static/images/no_image.jpeg" alt=”image”>
 </body>
 
 </html>

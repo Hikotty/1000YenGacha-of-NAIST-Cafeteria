@@ -27,8 +27,8 @@
     table th,
     table td {
       text-align: center;
-      width: 25%;
-      padding: 15px 0;
+      width: 5%;
+      /*padding: 15px 0;*/
       background-color: white;
     }
     table tr:first-child{
@@ -47,6 +47,9 @@
         <td></td>
         <td>品目</td>
         <td>値段</td>
+        <td>カロリー</td>
+        <td>塩分</td>
+        <td>炭水化物</td>
       </tr>
       {% for i in range(n): %}
       <tr>
@@ -54,8 +57,11 @@
           <td>
             <img src={{selected_photos[i]}} alt=”image” width="50" height="50">
           </td>
-          <td>{{selected_manu[i]}}</td>
+          <td>{{selected_menu[i]}}</td>
           <td>{{selected_price[i]}}円</td>
+          <td>{{selected_calorie[i]}}kcal</td>
+          <td>{{selected_salt[i]}}g</td>
+          <td>{{selected_carbon[i]}}g</td>
         </p>
       </tr>
       {% endfor %}
